@@ -3,11 +3,13 @@ package main;
 import javax.swing.*;
 import java.awt.*;
 
+import entity.Ball;
 import entity.Blocks;
 import entity.Player;
 
 public class GamePanel extends JPanel implements Runnable {
     Player player = new Player();
+    Ball ball = new Ball();
     Blocks[][] blocks = new Blocks[9][12];
 
     int padding= 8;
@@ -80,12 +82,14 @@ public class GamePanel extends JPanel implements Runnable {
 
     void update() {
         player.update();
+        ball.update();
     }
 
     @Override
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
         player.draw(g);
+        ball.draw(g);
 
         for (int row = 0; row < blocks.length; row++) {
             for (int col = 0; col < blocks[row].length; col++) {
