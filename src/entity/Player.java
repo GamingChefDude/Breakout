@@ -20,7 +20,7 @@ public class Player {
         }
     }
 
-    public static void draw(Graphics g) {
+    public void draw(Graphics g) {
         g.setColor(Color.darkGray);
         g.fillRect(posX, posY, width, height);
     }

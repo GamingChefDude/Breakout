@@ -2,10 +2,17 @@ package main;
 
 import javax.swing.*;
 import java.awt.*;
+
+import entity.Blocks;
 import entity.Player;
 
 public class GamePanel extends JPanel implements Runnable {
     Player player = new Player();
+    Blocks[][] blocks = new Blocks[9][12];
+
+    int padding= 8;
+    int blockWidth = 60; // 90
+    int blockHeight = 20; // 25
 
     public static int width = 800;
     public static int height = 600;
@@ -19,6 +26,14 @@ public class GamePanel extends JPanel implements Runnable {
         this.setBackground(Color.white);
         this.setFocusable(true);
         this.addKeyListener(keyH);
+
+        for (int row = 2; row < 9; row++) {
+            for (int col = 0; col < 12; col++) {
+                int x = col * (blockWidth + padding);
+                int y = row * (blockHeight + padding);
+                blocks[row][col] = new Blocks(y, x, blockWidth, blockHeight);
+            }
+        }
     }
 
     public void startGameThread() {
@@ -70,7 +85,17 @@ public class GamePanel extends JPanel implements Runnable {
     @Override
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
-        Player.draw(g);
+        player.draw(g);
+
+        for (int row = 0; row < blocks.length; row++) {
+            for (int col = 0; col < blocks[row].length; col++) {
+                Blocks b = blocks[row][col];
+                if (b != null && b.visible) {
+                    b.draw(g);
+                }
+            }
+        }
+
 
         g.dispose();
     }
