@@ -10,8 +10,6 @@ Break bricks, bounce the ball, and try to beat your high score!
 - Classic Breakout-style gameplay
 - Smooth paddle and ball physics
 - Brick collision detection
-- Simple score tracking
-- Fast-paced arcade action!
 
 ---
 
@@ -25,7 +23,7 @@ Break bricks, bounce the ball, and try to beat your high score!
 
 ## 🎮 How to Play
 
-1. **Move the paddle** with your keyboard (usually ← and → keys).
+1. **Move the paddle** with your keyboard (usually "a" and "d" keys).
 2. **Bounce the ball** to break all the bricks.
 3. **Don’t let the ball fall** below the paddle or it’s game over!
 
