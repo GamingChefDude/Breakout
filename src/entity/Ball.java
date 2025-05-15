@@ -8,7 +8,7 @@ public class Ball implements GamePanel.GameObject {
     public int width = 10;
     public int height = 10;
     public int posX = GamePanel.width / 2 - width / 2;
-    public int posY = GamePanel.height / 2 - height / 2 - 20;
+    public int posY = GamePanel.height - 50;
     public int velocityX = 5;
     public int velocityY = 7;
 
@@ -22,6 +22,7 @@ public class Ball implements GamePanel.GameObject {
             posX += velocityX;
         }
         posY += velocityY;
+        posX += velocityX;
     }
 
     public void draw(Graphics g) {

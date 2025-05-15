@@ -6,7 +6,7 @@ import main.KeyHandler;
 import java.awt.*;
 
 public class Player implements GamePanel.GameObject {
-    static int speed = 7;
+    static int speed = 8;
     public static int width = 200;
     public static int height = 20;
     public static int posX = GamePanel.width / 2 - width / 2;

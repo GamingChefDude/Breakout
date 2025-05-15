@@ -86,14 +86,12 @@ public class GamePanel extends JPanel implements Runnable {
         int getHeight();
     }
 
-
     public boolean checkCollision(GameObject a, GameObject b) {
         return a.getX() < b.getX() + b.getWidth() &&
                 a.getX() + a.getWidth() > b.getX() &&
                 a.getY() < b.getY() + b.getHeight() &&
                 a.getY() + a.getHeight() > b.getY();
     }
-
 
     public void collision() {
         ball.velocityY = -ball.velocityY;
@@ -134,8 +132,6 @@ public class GamePanel extends JPanel implements Runnable {
                 }
             }
         }
-
-
         g.dispose();
     }
 }
