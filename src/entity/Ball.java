@@ -4,15 +4,23 @@ import main.GamePanel;
 
 import java.awt.*;
 
-public class Ball {
-    int width = 10;
-    int height = 10;
-    int posX = GamePanel.width / 2 - width / 2;
-    int posY = GamePanel.height / 2 - height / 2 - 20;
-    int velocityX = 5;
-    int velocityY = 7;
+public class Ball implements GamePanel.GameObject {
+    public int width = 10;
+    public int height = 10;
+    public int posX = GamePanel.width / 2 - width / 2;
+    public int posY = GamePanel.height / 2 - height / 2 - 20;
+    public int velocityX = 5;
+    public int velocityY = 7;
 
     public void update() {
+        if (posY <= 0) {
+            velocityY = -velocityY;
+            posY += velocityY;
+        }
+        if (posX <= 0 || posX >= GamePanel.width - width) {
+            velocityX = -velocityX;
+            posX += velocityX;
+        }
         posY += velocityY;
     }
 
@@ -20,5 +28,10 @@ public class Ball {
         g.setColor(Color.red);
         g.fillRect(posX, posY, width, height);
     }
+
+    public int getX() {return posX;}
+    public int getY() {return posY;}
+    public int getWidth() {return width;}
+    public int getHeight() {return height;}
 
 }

@@ -5,12 +5,12 @@ import main.KeyHandler;
 
 import java.awt.*;
 
-public class Player {
+public class Player implements GamePanel.GameObject {
     static int speed = 7;
-    static int width = 200;
-    static int height = 20;
-    static int posX = GamePanel.width / 2 - width / 2;
-    static int posY = GamePanel.height - height;
+    public static int width = 200;
+    public static int height = 20;
+    public static int posX = GamePanel.width / 2 - width / 2;
+    public static int posY = GamePanel.height - height;
 
     public void update() {
         if (KeyHandler.left) {
@@ -24,4 +24,9 @@ public class Player {
         g.setColor(Color.darkGray);
         g.fillRect(posX, posY, width, height);
     }
+
+    public int getX() {return posX;}
+    public int getY() {return posY;}
+    public int getWidth() {return width;}
+    public int getHeight() {return height;}
 }

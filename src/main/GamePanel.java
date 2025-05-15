@@ -12,9 +12,8 @@ public class GamePanel extends JPanel implements Runnable {
     Ball ball = new Ball();
     Blocks[][] blocks = new Blocks[9][12];
 
-    int padding= 8;
-    int blockWidth = 60; // 90
-    int blockHeight = 20; // 25
+    int blockPosX;
+    int blockPosY;
 
     public static int width = 800;
     public static int height = 600;
@@ -31,9 +30,9 @@ public class GamePanel extends JPanel implements Runnable {
 
         for (int row = 2; row < 9; row++) {
             for (int col = 0; col < 12; col++) {
-                int x = col * (blockWidth + padding);
-                int y = row * (blockHeight + padding);
-                blocks[row][col] = new Blocks(y, x, blockWidth, blockHeight);
+                blockPosX = col * (Blocks.blockWidth + Blocks.padding);
+                blockPosY = row * (Blocks.blockHeight + Blocks.padding);
+                blocks[row][col] = new Blocks(blockPosY, blockPosX);
             }
         }
     }
@@ -80,9 +79,45 @@ public class GamePanel extends JPanel implements Runnable {
         }
     }
 
+    public interface GameObject {
+        int getX();
+        int getY();
+        int getWidth();
+        int getHeight();
+    }
+
+
+    public boolean checkCollision(GameObject a, GameObject b) {
+        return a.getX() < b.getX() + b.getWidth() &&
+                a.getX() + a.getWidth() > b.getX() &&
+                a.getY() < b.getY() + b.getHeight() &&
+                a.getY() + a.getHeight() > b.getY();
+    }
+
+
+    public void collision() {
+        ball.velocityY = -ball.velocityY;
+        ball.posY += ball.velocityY;
+    }
+
     void update() {
         player.update();
         ball.update();
+
+        if (checkCollision(player, ball)) {
+            collision();
+        }
+        for (int row = 0; row < blocks.length; row++) {
+            for (int col = 0; col < blocks[row].length; col++) {
+                Blocks block = blocks[row][col];
+                if (block != null && block.visible) {
+                    if (checkCollision(ball, block)) {
+                        collision();
+                        block.visible = false;
+                    }
+                }
+            }
+        }
     }
 
     @Override
