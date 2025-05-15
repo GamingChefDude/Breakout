@@ -36,3 +36,10 @@ Break bricks, bounce the ball, and try to beat your high score!
 ```bash
 git clone https://github.com/GamingChefDude/Breakout.git
 cd Breakout
+
+🙌 Contributions
+This is a learning project — if you'd like to improve it or fork it for your own version, go for it!
+
+Got a cool idea for a feature?
+Found a bug I missed?
+Feel free to open an issue or PR. 🎉
