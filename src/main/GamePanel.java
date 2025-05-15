@@ -2,7 +2,6 @@ package main;
 
 import javax.swing.*;
 import java.awt.*;
-
 import entity.Ball;
 import entity.Blocks;
 import entity.Player;

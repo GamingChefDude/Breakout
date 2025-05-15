@@ -1,7 +1,6 @@
 package entity;
 
 import main.GamePanel;
-
 import java.awt.*;
 
 public class Blocks implements GamePanel.GameObject {
