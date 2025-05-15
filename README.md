@@ -29,7 +29,7 @@ Break bricks, bounce the ball, and try to beat your high score!
 
 ---
 
-🙌 Contributions
+## 🙌 Contributions
 This is a learning project — if you'd like to improve it or fork it for your own version, go for it!
 
 Got a cool idea for a feature?
