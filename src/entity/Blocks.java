@@ -3,6 +3,11 @@ package entity;
 import main.GamePanel;
 import java.awt.*;
 
+/*
+    handles Block
+    Makes block and get it ready for the array in GamePanel class
+ */
+
 public class Blocks implements GamePanel.GameObject {
     public static int padding= 8;
     public static int blockWidth = 60; // 90
@@ -16,17 +21,16 @@ public class Blocks implements GamePanel.GameObject {
         this.posX = posX;
     }
 
-    public void update() {
-
-    }
-
     public void draw(Graphics g) {
+        // draw only visible
+        // easiest way to brake them
         if (visible) {
             g.setColor(new Color(255, 50, 50));
             g.fillRect(posX, posY, blockWidth, blockHeight);
         }
     }
 
+    // get things for collision
     public int getX() {return posX;}
     public int getY() {return posY;}
     public int getWidth() {return blockWidth;}

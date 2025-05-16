@@ -6,6 +6,10 @@ import entity.Ball;
 import entity.Blocks;
 import entity.Player;
 
+/*
+    Handles Game loop, updating entities and paint components
+ */
+
 public class GamePanel extends JPanel implements Runnable {
     Player player = new Player();
     Ball ball = new Ball();
@@ -27,6 +31,7 @@ public class GamePanel extends JPanel implements Runnable {
         this.setFocusable(true);
         this.addKeyListener(keyH);
 
+        // places all the blocks from the array
         for (int row = 2; row < 9; row++) {
             for (int col = 0; col < 12; col++) {
                 blockPosX = col * (Blocks.blockWidth + Blocks.padding);
@@ -45,7 +50,7 @@ public class GamePanel extends JPanel implements Runnable {
     @Override
     public void run() {
         // the main gameLoop
-        // running update and repaint 60 times a second because fps = 60
+        // running update and repaint the fps
 
         // making variables for delta time / the fps
         double drawInterval = (double) 1000000000 /fps;
@@ -79,6 +84,7 @@ public class GamePanel extends JPanel implements Runnable {
     }
 
     public interface GameObject {
+        // get things for collision
         int getX();
         int getY();
         int getWidth();
@@ -104,6 +110,8 @@ public class GamePanel extends JPanel implements Runnable {
         if (checkCollision(player, ball)) {
             collision();
         }
+
+        // collision for ball and block
         for (int row = 0; row < blocks.length; row++) {
             for (int col = 0; col < blocks[row].length; col++) {
                 Blocks block = blocks[row][col];
@@ -123,6 +131,7 @@ public class GamePanel extends JPanel implements Runnable {
         player.draw(g);
         ball.draw(g);
 
+        // paint the array of blocks
         for (int row = 0; row < blocks.length; row++) {
             for (int col = 0; col < blocks[row].length; col++) {
                 Blocks b = blocks[row][col];

@@ -4,6 +4,11 @@ import main.GamePanel;
 import main.KeyHandler;
 import java.awt.*;
 
+/*
+    Handles player
+    Making the player and moves it
+ */
+
 public class Player implements GamePanel.GameObject {
     static int speed = 8;
     public static int width = 200;
@@ -24,6 +29,7 @@ public class Player implements GamePanel.GameObject {
         g.fillRect(posX, posY, width, height);
     }
 
+    // get things for collision
     public int getX() {return posX;}
     public int getY() {return posY;}
     public int getWidth() {return width;}

@@ -3,6 +3,11 @@ package main;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
+/*
+    Handles key input for the player
+    Moves Left and Right
+ */
+
 public class KeyHandler implements KeyListener {
     public static boolean left;
     public static boolean right;

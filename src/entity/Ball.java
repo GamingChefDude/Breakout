@@ -3,6 +3,11 @@ package entity;
 import main.GamePanel;
 import java.awt.*;
 
+/*
+    Handles Ball
+    Makes the ball and moves it
+ */
+
 public class Ball implements GamePanel.GameObject {
     public int width = 10;
     public int height = 10;
@@ -12,10 +17,12 @@ public class Ball implements GamePanel.GameObject {
     public int velocityY = 7;
 
     public void update() {
+        // bounce of roof
         if (posY <= 0) {
             velocityY = -velocityY;
             posY += velocityY;
         }
+        // bounce on the walls
         if (posX <= 0 || posX >= GamePanel.width - width) {
             velocityX = -velocityX;
             posX += velocityX;
@@ -29,6 +36,7 @@ public class Ball implements GamePanel.GameObject {
         g.fillRect(posX, posY, width, height);
     }
 
+    // get things for collision
     public int getX() {return posX;}
     public int getY() {return posY;}
     public int getWidth() {return width;}
