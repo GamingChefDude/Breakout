@@ -40,6 +40,8 @@ Feel free to open an issue or PR. 🎉
 
 ## 🧑‍💻 Getting Started
 
+### Download under the reales
+
 ### 1. Clone the repository
 
 ```bash
