@@ -10,7 +10,8 @@ import java.awt.*;
  */
 
 public class Player implements GamePanel.GameObject {
-    static int speed = 8;
+    int velocityXLeft;
+    int velocityXRight;
     public static int width = 200;
     public static int height = 20;
     public static int posX = GamePanel.width / 2 - width / 2;
@@ -18,10 +19,21 @@ public class Player implements GamePanel.GameObject {
 
     public void update() {
         if (KeyHandler.left) {
-            posX -= speed;
+            posX -= velocityXLeft;
         } else if (KeyHandler.right) {
-            posX += speed;
+            posX += velocityXRight;
         }
+        if (posX <= 0) {
+            velocityXLeft = 0;
+        } else if (posX != 0) {
+            velocityXLeft = 8;
+        }
+        if (posX >= GamePanel.width - width) {
+            velocityXRight = 0;
+        } else if (posX != GamePanel.width - width) {
+            velocityXRight = 8;
+        }
+
     }
 
     public void draw(Graphics g) {
