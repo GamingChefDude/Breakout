@@ -40,7 +40,7 @@ Feel free to open an issue or PR. 🎉
 
 ## 🧑‍💻 Getting Started
 
-### Download under the reales
+### Download under the release tab
 
 ### 1. Clone the repository
 
