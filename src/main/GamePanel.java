@@ -13,7 +13,12 @@ import entity.Player;
 public class GamePanel extends JPanel implements Runnable {
     Player player = new Player();
     Ball ball = new Ball();
-    Blocks[][] blocks = new Blocks[9][12];
+
+    int rows = 1;
+    int cols = 1;
+    Blocks[][] blocks = new Blocks[rows][cols];
+
+    Screens screen = new Screens();
 
     int blockPosX;
     int blockPosY;
@@ -27,13 +32,13 @@ public class GamePanel extends JPanel implements Runnable {
 
     public GamePanel() {
         this.setPreferredSize(new Dimension(width, height));
-        this.setBackground(Color.white);
+        this.setBackground(new Color(255, 255, 255, 100));
         this.setFocusable(true);
         this.addKeyListener(keyH);
 
         // places all the blocks from the array
-        for (int row = 2; row < 9; row++) {
-            for (int col = 0; col < 12; col++) {
+        for (int row = 0; row < rows; row++) {
+            for (int col = 0; col < cols; col++) {
                 blockPosX = col * (Blocks.blockWidth + Blocks.padding);
                 blockPosY = row * (Blocks.blockHeight + Blocks.padding);
                 blocks[row][col] = new Blocks(blockPosY, blockPosX);
@@ -103,19 +108,30 @@ public class GamePanel extends JPanel implements Runnable {
         ball.posY += ball.velocityY;
     }
 
+    boolean victory;
+    boolean death;
+
+    public void checkVictoryCondition() {
+        for (int r = 0; r < rows; r++) {
+            for (int c = 0; c < cols; c++) {
+                if (blocks[r][c].visible) {
+                    return; // Still some left
+                }
+            }
+        }
+        victory = true;
+        setBackground(new Color(100, 255, 100, 100));
+    }
+
     void update() {
         player.update();
         ball.update();
-
-        if (ball.posY > height + ball.height) {
-            setBackground(new Color(255, 100, 100, 200 ));
-        }
 
         if (checkCollision(player, ball)) {
             collision();
         }
 
-        // collision for ball and block
+        // collision for ball and blocks
         for (Blocks[] value : blocks) {
             for (Blocks block : value) {
                 if (block != null && block.visible) {
@@ -126,32 +142,41 @@ public class GamePanel extends JPanel implements Runnable {
                 }
             }
         }
+        // check for death
+        if (ball.posY > height + ball.height) {
+            death = true;
+            setBackground(new Color(255, 100, 100, 200 ));
+        }
+
+        checkVictoryCondition();
     }
 
     @Override
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
-        player.draw(g);
-        ball.draw(g);
+        // draw entities
+        {
+            player.draw(g);
+            ball.draw(g);
 
-        // paint the array of blocks
-        for (Blocks[] block : blocks) {
-            for (Blocks b : block) {
-                if (b != null && b.visible) {
-                    b.draw(g);
+            // paint the array of blocks
+            for (Blocks[] block : blocks) {
+                for (Blocks b : block) {
+                    if (b != null && b.visible) {
+                        b.draw(g);
+                    }
                 }
             }
         }
 
-        if (ball.posY > height + ball.height) {
-            g.setColor(Color.black);
-            g.setFont(new Font("Arial", Font.BOLD, 30));
-            g.drawString("Game Over", width / 2 - 80, height / 2 / 2);
-
-            g.setFont(new Font("Arial", Font.BOLD, 20));
-            g.drawString("Press ESC to quit", width / 2 - 85, height / 2 + 50);
+        // draw screens
+        {
+            if (victory) {
+                screen.victoryDraw(g);
+            } else if (death) {
+                screen.deathDraw(g);
+            }
         }
-
         g.dispose();
     }
 }

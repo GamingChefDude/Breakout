@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="Brakeout:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/Brakeout_jar</output-path>
+    <root id="archive" name="Brakeout.jar">
+      <element id="module-output" name="Brakeout" />
+    </root>
+  </artifact>
+</component>
