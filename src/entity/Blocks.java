@@ -22,8 +22,8 @@ public class Blocks implements GamePanel.GameObject {
     }
 
     public void draw(Graphics g) {
-        // draw only visible
-        // easiest way to brake them
+        // draw only the visible
+        // easiest way to break them
         if (visible) {
             g.setColor(new Color(255, 50, 50));
             g.fillRect(posX, posY, blockWidth, blockHeight);

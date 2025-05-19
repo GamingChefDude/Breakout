@@ -4,7 +4,7 @@ import main.GamePanel;
 import java.awt.*;
 
 /*
-    Handles Ball
+    Handle Ball
     Makes the ball and moves it
  */
 
@@ -17,7 +17,7 @@ public class Ball implements GamePanel.GameObject {
     public int velocityY = 7;
 
     public void update() {
-        // bounce of roof
+        // bounce of the roof
         if (posY <= 0) {
             velocityY = -velocityY;
             posY += velocityY;

@@ -8,7 +8,7 @@ import entity.Player;
 
 /*
     Handles Game loop, updating entities and paint components
- */
+*/
 
 public class GamePanel extends JPanel implements Runnable {
     Player player = new Player();
@@ -107,14 +107,17 @@ public class GamePanel extends JPanel implements Runnable {
         player.update();
         ball.update();
 
+        if (ball.posY > height + ball.height) {
+            setBackground(new Color(255, 100, 100, 200 ));
+        }
+
         if (checkCollision(player, ball)) {
             collision();
         }
 
         // collision for ball and block
-        for (int row = 0; row < blocks.length; row++) {
-            for (int col = 0; col < blocks[row].length; col++) {
-                Blocks block = blocks[row][col];
+        for (Blocks[] value : blocks) {
+            for (Blocks block : value) {
                 if (block != null && block.visible) {
                     if (checkCollision(ball, block)) {
                         collision();
@@ -132,14 +135,23 @@ public class GamePanel extends JPanel implements Runnable {
         ball.draw(g);
 
         // paint the array of blocks
-        for (int row = 0; row < blocks.length; row++) {
-            for (int col = 0; col < blocks[row].length; col++) {
-                Blocks b = blocks[row][col];
+        for (Blocks[] block : blocks) {
+            for (Blocks b : block) {
                 if (b != null && b.visible) {
                     b.draw(g);
                 }
             }
         }
+
+        if (ball.posY > height + ball.height) {
+            g.setColor(Color.black);
+            g.setFont(new Font("Arial", Font.BOLD, 30));
+            g.drawString("Game Over", width / 2 - 80, height / 2 / 2);
+
+            g.setFont(new Font("Arial", Font.BOLD, 20));
+            g.drawString("Press ESC to quit", width / 2 - 85, height / 2 + 50);
+        }
+
         g.dispose();
     }
 }

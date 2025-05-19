@@ -9,8 +9,7 @@ import java.awt.event.KeyListener;
  */
 
 public class KeyHandler implements KeyListener {
-    public static boolean left;
-    public static boolean right;
+    public static boolean left, right;
 
     // don't use
     @Override
@@ -25,6 +24,9 @@ public class KeyHandler implements KeyListener {
             left = true;
         } else if (key == KeyEvent.VK_D) {
             right = true;
+        }
+        if (key == KeyEvent.VK_ESCAPE) {
+            System.exit(0);
         }
     }
 

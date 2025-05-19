@@ -5,7 +5,7 @@ import main.KeyHandler;
 import java.awt.*;
 
 /*
-    Handles player
+    Handle player
     Making the player and moves it
  */
 
@@ -23,14 +23,16 @@ public class Player implements GamePanel.GameObject {
         } else if (KeyHandler.right) {
             posX += velocityXRight;
         }
+
+        // window-edge collision
         if (posX <= 0) {
             velocityXLeft = 0;
-        } else if (posX != 0) {
+        } else {
             velocityXLeft = 8;
         }
         if (posX >= GamePanel.width - width) {
             velocityXRight = 0;
-        } else if (posX != GamePanel.width - width) {
+        } else {
             velocityXRight = 8;
         }
 
