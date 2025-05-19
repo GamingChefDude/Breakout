@@ -12,10 +12,10 @@ import java.awt.*;
 public class Player implements GamePanel.GameObject {
     int velocityXLeft;
     int velocityXRight;
-    public static int width = 200;
-    public static int height = 20;
-    public static int posX = GamePanel.width / 2 - width / 2;
-    public static int posY = GamePanel.height - height;
+    public int width = 200;
+    public int height = 20;
+    public int posX;
+    public int posY;
 
     public void update() {
         // move Player

@@ -11,10 +11,11 @@ import java.awt.*;
 public class Ball implements GamePanel.GameObject {
     public int width = 10;
     public int height = 10;
-    public int posX = GamePanel.width / 2 - width / 2;
-    public int posY = GamePanel.height - 50;
+    public int posX;
+    public int posY;
     public int velocityX = 5;
     public int velocityY = 7;
+
 
     public void update() {
         // bounce of the roof

@@ -12,6 +12,7 @@ import entity.Player;
 
 public class GamePanel extends JPanel implements Runnable {
     Player player = new Player();
+
     Ball ball = new Ball();
 
     int rows = 9; // 9
@@ -32,18 +33,8 @@ public class GamePanel extends JPanel implements Runnable {
 
     public GamePanel() {
         this.setPreferredSize(new Dimension(width, height));
-        this.setBackground(new Color(255, 255, 255, 100));
         this.setFocusable(true);
         this.addKeyListener(keyH);
-
-        // places all the blocks from the array
-        for (int row = 2; row < rows; row++) {
-            for (int col = 0; col < cols; col++) {
-                blockPosX = col * (Blocks.blockWidth + Blocks.padding);
-                blockPosY = row * (Blocks.blockHeight + Blocks.padding);
-                blocks[row][col] = new Blocks(blockPosY, blockPosX);
-            }
-        }
     }
 
     public void startGameThread() {
@@ -58,7 +49,7 @@ public class GamePanel extends JPanel implements Runnable {
         // running update and repaint the fps
 
         // making variables for delta time / the fps
-        double drawInterval = (double) 1000000000 /fps;
+        double drawInterval = (double) 1000000000 / fps;
         double delta = 0;
         long lastTime = System.nanoTime();
         long currentTime;
@@ -124,9 +115,9 @@ public class GamePanel extends JPanel implements Runnable {
     boolean death;
 
     public void checkVictoryCondition() {
-        for (int r = 2; r < rows; r++) {
-            for (int c = 0; c < cols; c++) {
-                if (blocks[r][c].visible) {
+        for (int row = 2; row < rows; row++) {
+            for (int col = 0; col < cols; col++) {
+                if (blocks[row][col].visible) {
                     return; // Still some left
                 }
             }
@@ -136,59 +127,90 @@ public class GamePanel extends JPanel implements Runnable {
     }
 
     void update() {
-        player.update();
-        ball.update();
+        if (!KeyHandler.start) {
+            setBackground(Color.white);
 
-        if (checkCollision(player, ball)) {
-            collision();
-        }
+            death = false;
+            victory = false;
 
-        // collision for ball and blocks
-        for (Blocks[] value : blocks) {
-            for (Blocks block : value) {
-                if (block != null && block.visible) {
-                    if (checkCollision(ball, block)) {
-                        collision();
-                        block.visible = false;
-                    }
+            // places the player
+            player.posX = width / 2 - player.width / 2;
+            player.posY = height - player.height;
+
+            // places the ball
+            ball.posX = width / 2 - ball.width / 2;
+            ball.posY = height - 50;
+
+            // places all the blocks from the array
+            for (int row = 2; row < rows; row++) {
+                for (int col = 0; col < cols; col++) {
+                    blockPosX = col * (Blocks.blockWidth + Blocks.padding);
+                    blockPosY = row * (Blocks.blockHeight + Blocks.padding);
+                    blocks[row][col] = new Blocks(blockPosY, blockPosX);
                 }
             }
         }
-        // check for death
-        if (ball.posY > height + ball.height) {
-            death = true;
-            setBackground(new Color(255, 100, 100, 200 ));
-        }
 
-        checkVictoryCondition();
+        if (KeyHandler.start) {
+            player.update();
+            ball.update();
+
+            if (checkCollision(player, ball)) {
+                collision();
+            }
+
+            // collision for ball and blocks
+            for (Blocks[] value : blocks) {
+                for (Blocks block : value) {
+                    if (block != null && block.visible) {
+                        if (checkCollision(ball, block)) {
+                            collision();
+                            block.visible = false;
+                        }
+                    }
+                }
+            }
+
+            // check for death
+            if (ball.posY > height + ball.height) {
+                death = true;
+                setBackground(new Color(255, 100, 100, 200));
+            }
+
+            checkVictoryCondition();
+        }
     }
 
     @Override
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
-        // draw entities
-        {
-            player.draw(g);
-            ball.draw(g);
+        screen.startPageDraw(g);
 
-            // paint the array of blocks
-            for (Blocks[] block : blocks) {
-                for (Blocks b : block) {
-                    if (b != null && b.visible) {
-                        b.draw(g);
+        if (KeyHandler.start) {
+            // draw entities
+            {
+                player.draw(g);
+                ball.draw(g);
+
+                // paint the array of blocks
+                for (Blocks[] block : blocks) {
+                    for (Blocks b : block) {
+                        if (b != null && b.visible) {
+                            b.draw(g);
+                        }
+                    }
+                }
+
+                // draw screens
+                {
+                    if (victory) {
+                        screen.victoryDraw(g);
+                    } else if (death) {
+                        screen.deathDraw(g);
                     }
                 }
             }
+            g.dispose();
         }
-
-        // draw screens
-        {
-            if (victory) {
-                screen.victoryDraw(g);
-            } else if (death) {
-                screen.deathDraw(g);
-            }
-        }
-        g.dispose();
     }
 }
