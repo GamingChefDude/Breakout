@@ -18,6 +18,7 @@ public class Player implements GamePanel.GameObject {
     public static int posY = GamePanel.height - height;
 
     public void update() {
+        // move Player
         if (KeyHandler.left) {
             posX -= velocityXLeft;
         } else if (KeyHandler.right) {
@@ -25,20 +26,22 @@ public class Player implements GamePanel.GameObject {
         }
 
         // window-edge collision
-        if (posX <= 0) {
-            velocityXLeft = 0;
-        } else {
-            velocityXLeft = 8;
+        {
+            if (posX <= 0) {
+                velocityXLeft = 0;
+            } else {
+                velocityXLeft = 8;
+            }
+            if (posX >= GamePanel.width - width) {
+                velocityXRight = 0;
+            } else {
+                velocityXRight = 8;
+            }
         }
-        if (posX >= GamePanel.width - width) {
-            velocityXRight = 0;
-        } else {
-            velocityXRight = 8;
-        }
-
     }
 
     public void draw(Graphics g) {
+        // draw player
         g.setColor(Color.darkGray);
         g.fillRect(posX, posY, width, height);
     }

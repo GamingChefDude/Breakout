@@ -14,8 +14,8 @@ public class GamePanel extends JPanel implements Runnable {
     Player player = new Player();
     Ball ball = new Ball();
 
-    int rows = 1;
-    int cols = 1;
+    int rows = 9; // 9
+    int cols = 12; // 12
     Blocks[][] blocks = new Blocks[rows][cols];
 
     Screens screen = new Screens();
@@ -37,7 +37,7 @@ public class GamePanel extends JPanel implements Runnable {
         this.addKeyListener(keyH);
 
         // places all the blocks from the array
-        for (int row = 0; row < rows; row++) {
+        for (int row = 2; row < rows; row++) {
             for (int col = 0; col < cols; col++) {
                 blockPosX = col * (Blocks.blockWidth + Blocks.padding);
                 blockPosY = row * (Blocks.blockHeight + Blocks.padding);
@@ -104,6 +104,18 @@ public class GamePanel extends JPanel implements Runnable {
     }
 
     public void collision() {
+        if (checkCollision(player, ball)) {
+            int hitPoint = ball.getX() + (ball.width / 2);
+            int paddleCenter = player.getX() + (player.getWidth() / 2);
+
+            int distanceFromCenter = Math.abs(hitPoint - paddleCenter);
+
+            // Adjust X velocity based on distance from a center while keeping an original direction
+            int direction = ball.velocityX >= 0 ? 1 : -1;
+
+            int newSpeed = 3 + (distanceFromCenter / 20);
+            ball.velocityX = direction * newSpeed;
+        }
         ball.velocityY = -ball.velocityY;
         ball.posY += ball.velocityY;
     }
@@ -112,7 +124,7 @@ public class GamePanel extends JPanel implements Runnable {
     boolean death;
 
     public void checkVictoryCondition() {
-        for (int r = 0; r < rows; r++) {
+        for (int r = 2; r < rows; r++) {
             for (int c = 0; c < cols; c++) {
                 if (blocks[r][c].visible) {
                     return; // Still some left
